@@ -34,14 +34,39 @@
 export default {
   data() {
     return {
-      team: [
-        { name: "Jaimi Patel", role: "Web developer" ,avatar:'../assets/avatar1.jpg'},
-        { name: "Hemanshi Dudhatra", role: "Graphic designer" ,avatar:'../assets/avatar2.jpg'},
-        { name: "Amisha Patel", role: "Web designer" ,avatar:'../assets/avatar3.jpg'},
-        { name: "Jigar Dabhi", role: "Social media marketer" ,avatar:'../assets/avatar4.jpg'},
-        { name: "Priya Bhogayata", role: "Sales exicuter" ,avatar:'../assets/avatar5.jpg'},
-      ],
+      // team: [
+      //   { name: "Jaimi Patel", role: "Web developer" ,avatar:'../assets/avatar1.jpg'},
+      //   { name: "Hemanshi Dudhatra", role: "Graphic designer" ,avatar:'../assets/avatar2.jpg'},
+      //   { name: "Amisha Patel", role: "Web designer" ,avatar:'../assets/avatar3.jpg'},
+      //   { name: "Jigar Dabhi", role: "Social media marketer" ,avatar:'../assets/avatar4.jpg'},
+      //   { name: "Priya Bhogayata", role: "Sales exicuter" ,avatar:'../assets/avatar5.jpg'},
+      // ],
+      team:[]
     };
+  },
+  created() {
+    this.showdata()
+  },
+  updated(){
+    this.showdata()
+  },
+  methods: {
+    showdata(){
+      this.$http
+      .get("https://vuetify-4dee4-default-rtdb.firebaseio.com/teams.json")
+      .then((data) =>{
+        return data.json();
+      })
+      .then((data) => {
+        var keys = [];
+        for (let key in data) {
+          data[key].id = key;
+          keys.push(data[key]);
+        }
+        this.team=keys;
+        // console.log(keys);
+      });
+    }
   },
 };
 </script>

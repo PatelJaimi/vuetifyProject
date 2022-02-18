@@ -67,46 +67,69 @@
 export default {
   data() {
     return {
-      projects: [
-        {
-          title: "Design a new website",
-          person: "Jaimi Patel",
-          due: "1st Jan 2019",
-          status: "ongoing",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Code up the home page",
-          person: "Hemanshi Dudhatra",
-          due: "10th Jan 2019",
-          status: "complete",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Design video thumb nails",
-          person: "Amisha Patel",
-          due: "20th Dec 2018",
-          status: "complete",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-        {
-          title: "Create a community forum",
-          person: "Jigar Dabhi",
-          due: "20th Oct 2018",
-          status: "overdue",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
-        },
-      ],
+      // projects: [
+      //   {
+      //     title: "Design a new website",
+      //     person: "Jaimi Patel",
+      //     due: "1st Jan 2019",
+      //     status: "ongoing",
+      //     content:
+      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+      //   },
+      //   {
+      //     title: "Code up the home page",
+      //     person: "Hemanshi Dudhatra",
+      //     due: "10th Jan 2019",
+      //     status: "complete",
+      //     content:
+      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+      //   },
+      //   {
+      //     title: "Design video thumb nails",
+      //     person: "Amisha Patel",
+      //     due: "20th Dec 2018",
+      //     status: "complete",
+      //     content:
+      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+      //   },
+      //   {
+      //     title: "Create a community forum",
+      //     person: "Jigar Dabhi",
+      //     due: "20th Oct 2018",
+      //     status: "overdue",
+      //     content:
+      //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!",
+      //   },
+      // ],
+      projects:[]
     };
+  },
+  created() {
+    this.showdata()
+  },
+  updated(){
+    this.showdata()
   },
   methods: {
     sortBy(para) {
       this.projects.sort((a, b) => (a[para] < b[para] ? -1 : 1));
     },
+    showdata(){
+      this.$http
+      .get("https://vuetify-4dee4-default-rtdb.firebaseio.com/posts.json")
+      .then((data) =>{
+        return data.json();
+      })
+      .then((data) => {
+        var keys = [];
+        for (let key in data) {
+          data[key].id = key;
+          keys.push(data[key]);
+        }
+        this.projects=keys;
+        // console.log(keys);
+      });
+    }
   },
 };
 </script>

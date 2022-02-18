@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
+import VueResource from 'vue-resource';
 
 import VueRouter from 'vue-router';
 import Dashboard from './components/Dashboard.vue';
 import Team from './components/Team.vue';
 import Projects from './components/Projects.vue';
 
+Vue.use(VueResource)
 Vue.use(VueRouter);
 
 const routes = [
